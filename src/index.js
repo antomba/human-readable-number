@@ -3,14 +3,14 @@ module.exports = function toReadable(number) {
     if (number < 100) {
         return toOneHundred(number);
     } else if (n.length == 3) {
-        let f = n[0];
-        let s = n[1];
-        let t = n[2];
-        let st = parseInt(s.concat(t));
-        if (parseInt(s) + parseInt(t) == 0) {
+        let f = parseInt(n[0]);
+        let s = parseInt(n[1]);
+        let t = parseInt(n[2]);
+        let st = parseInt(n[1].concat(n[2]));
+        if (s + t == 0) {
             return upToTen(f) + " hundred";
-        } else if (parseInt(t) == 0) {
-            return upToTen(f) + " hundred " + twentyToNinety(parseInt(s));
+        } else if (t == 0) {
+            return upToTen(f) + " hundred " + twentyToNinety(s);
         } else {
             return upToTen(f) + " hundred " + toOneHundred(st);
         }
@@ -26,10 +26,12 @@ function toOneHundred(number) {
     } else if (number > 9 && number < 20) {
         return tenToNineteen(number - 10);
     } else if (n.length == 2) {
-        if (number.toString()[1] == 0) {
-            return twentyToNinety(n[0]);
+        if (n[1] == 0) {
+            return twentyToNinety(parseInt(n[0]));
         } else {
-            return twentyToNinety(n[0]) + " " + upToTen(n[1]);
+            return (
+                twentyToNinety(parseInt(n[0])) + " " + upToTen(parseInt(n[1]))
+            );
         }
     }
 }
