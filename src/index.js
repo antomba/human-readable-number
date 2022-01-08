@@ -1,17 +1,18 @@
 module.exports = function toReadable(number) {
+    let n = number.toString();
     if (number < 100) {
         return toOneHundred(number);
-    } else if (number.toString().length == 3) {
-        let f = number.toString()[0];
-        let s = number.toString()[1];
-        let t = number.toString()[2];
-        let st = parseInt(s, t);
+    } else if (n.length == 3) {
+        let f = n[0];
+        let s = n[1];
+        let t = n[2];
+        let st = parseInt(s.concat(t));
         if (parseInt(s) + parseInt(t) == 0) {
             return upToTen(f) + " hundred";
         } else if (parseInt(t) == 0) {
             return upToTen(f) + " hundred " + twentyToNinety(parseInt(s));
         } else {
-            return upToTen(f) + " hundred " + toOneHundred(parseInt(s + t));
+            return upToTen(f) + " hundred " + toOneHundred(st);
         }
     } else {
         return "number is >= 1000";
@@ -19,17 +20,16 @@ module.exports = function toReadable(number) {
 };
 
 function toOneHundred(number) {
-    if (number.toString().length == 1) {
+    let n = number.toString();
+    if (n.length == 1) {
         return upToTen(number);
     } else if (number > 9 && number < 20) {
         return tenToNineteen(number - 10);
-    } else if (number.toString().length == 2) {
+    } else if (n.length == 2) {
         if (number.toString()[1] == 0) {
-            return twentyToNinety(number.toString()[0]);
+            return twentyToNinety(n[0]);
         } else {
-            let n = number.toString()[0];
-            let m = number.toString()[1];
-            return twentyToNinety(n) + " " + upToTen(m);
+            return twentyToNinety(n[0]) + " " + upToTen(n[1]);
         }
     }
 }
@@ -65,7 +65,6 @@ function tenToNineteen(n) {
 }
 function twentyToNinety(n) {
     return [
-        "",
         "ten",
         "twenty",
         "thirty",
@@ -75,5 +74,5 @@ function twentyToNinety(n) {
         "seventy",
         "eighty",
         "ninety",
-    ][n];
+    ][n - 1];
 }
